@@ -18,13 +18,29 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+from ... import Base
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
-
+section = config.config_ini_section
+config.set_section_option(
+    section, "POSTGRES_USER", os.environ.get("POSTGRES_USER", "abdulrahmanalthenayan")
+)
+config.set_section_option(
+    section, "POSTGRES_PASSWORD", os.environ.get("POSTGRES_PASSWORD", "postgres")
+)
+config.set_section_option(
+    section, "POSTGRES_HOST", os.environ.get("POSTGRES_HOST", "localhost")
+)
+config.set_section_option(
+    section, "POSTGRES_PORT", os.environ.get("POSTGRES_PORT", "5432")
+)
+config.set_section_option(
+    section, "POSTGRES_DB", os.environ.get("POSTGRES_DB", "events_app")
+)
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
